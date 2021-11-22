@@ -2028,7 +2028,9 @@ CronBackgroundWorker(Datum main_arg)
 	/* Post-execution cleanup. */
 	disable_timeout(STATEMENT_TIMEOUT, false);
 	CommitTransactionCommand();
+#if (PG_VERSION_NUM < 130000)
 	ProcessCompletedNotifies();
+#endif
 	pgstat_report_activity(STATE_IDLE, command);
 	pgstat_report_stat(true);
 
